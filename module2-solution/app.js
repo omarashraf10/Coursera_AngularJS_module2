@@ -17,6 +17,7 @@ function ToBuyController(ShoppingListCheckOffService) {
   list.removeItem = function (itemIndex) {
     ShoppingListCheckOffService.removeItem(itemIndex);
   };
+    list.ToBuyMessage = function(){return list.ToBuyItems.length===0};
 }
 
 AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
@@ -24,7 +25,7 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
   var list = this;
 
   list.BoughtItems = ShoppingListCheckOffService.getBougthItems();
-
+  list.BougthMessage = function(){return list.BoughtItems.length===0};
 }
 
 
@@ -42,17 +43,18 @@ function ShoppingListCheckOffService() {
 
   var BougthItems =[];
 
-  service.addItem = function (itemName, quantity) {
 
-  };
-
+// this function removes item from toBuy list and adds it to Bougth list
   service.removeItem = function (itemIndex) {
     var item = {
       name: ToBuyItems[itemIndex].name,
       quantity: ToBuyItems[itemIndex].quantity
     };
     BougthItems.push(item);
+  //  console.log('b',BougthItems);
     ToBuyItems.splice(itemIndex, 1);
+//    console.log('a',ToBuyItems);
+//    console.log('first element',ToBuyItems[0]);
   };
 
   service.getToBuyItems = function () {
@@ -62,6 +64,7 @@ function ShoppingListCheckOffService() {
   service.getBougthItems = function () {
     return BougthItems;
   };
+
 }
 
 
